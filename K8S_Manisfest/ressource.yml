@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-confidence
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      imagePullSecrets:
+      - name: aws-ecr
+      containers:
+      - name: nginx
+        image: nginx # 064137398917.dkr.ecr.us-east-1.amazonaws.com/development:v1.0.0
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "1000Gi"
+            cpu: "1000Gi"
+          limits:
+            memory: "1000Gi"
+            cpu: "1000Gi"

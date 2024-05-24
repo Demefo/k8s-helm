@@ -1,0 +1,52 @@
+# Define the Redis deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  labels:
+    app: redis
+    apps_name: thunderstorm
+spec:
+  replicas: 2  # Number of Redis pod replicas
+  selector:
+    matchLabels:
+      app: redis
+      apps_name: thunderstorm
+  template:
+    metadata:
+      labels:
+        app: redis
+        apps_name: thunderstorm
+    spec:
+      containers:
+      - name: redis
+        image: redis:latest  # Replace with specific Redis version if needed
+        ports:
+        - containerPort: 6379
+        # Optional: Configure resource requests and limits for Redis container
+        # resources:
+        #   requests:
+        #     memory: "1Gi"
+        #     cpu: "1"
+        #   limits:
+        #     memory: "2Gi"
+        #     cpu: "2"
+
+# Define the service for Redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  selector:
+    app: redis
+  ports:
+  - protocol: TCP
+    port: 6379
+    targetPort: 6379
+  # Choose a service type based on your needs:
+  # - ClusterIP (default): Service accessible only within the cluster
+  # - NodePort: Service accessible through a NodePort on each worker node
+  # - LoadBalancer (cloud provider specific): Exposes service through a load balancer
+  type: ClusterIP  # Replace with NodePort or LoadBalancer if needed

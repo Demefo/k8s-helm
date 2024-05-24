@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s5-gisele
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: thomisis
+  template:
+    metadata:
+      labels:
+        app: thomisis
+    spec:
+      containers:
+      - name: eric
+        image: nginx11
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: thomisis
+              key: MYSQL_ROOT_PASSWORD
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: thomisis
+              key: DB_PASSWORD
+        - name: REDIS_PASSWORD_2
+          valueFrom:
+            secretKeyRef:
+              name: thomisis
+              key: REDIS_PASSWORD_2
+        - name: AUTH_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: thomisis
+              key: AUTH_HOST
+        - name: AUTH_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: thomisis
+              key: AUTH_PORT
+        - name: WEATHER_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: thomisis
+              key: WEATHER_HOST
+        - name: WEATHER_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: thomisis
+              key: WEATHER_PORT
+        - name: REDIS_USER
+          valueFrom:
+            configMapKeyRef:
+              name: thomisis
+              key: REDIS_USER
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: thomisis
+              key: DB_HOST

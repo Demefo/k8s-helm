@@ -1,0 +1,18 @@
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 50
+  targetCPUUtilizationPercentage: 60
+  # targetMemoryUtilizationPercentage: 60
+replicaCount: 4
+image:
+  tag: "0.4.0"
+ingress:
+  enabled: true
+
+resources: 
+  limits:
+    memory: 200Mi
+  requests:
+    cpu: 200m
+    memory: 200Mi

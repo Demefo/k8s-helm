@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: required
+  labels:
+    data: blue
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      data: blue
+  template:
+    metadata:
+      labels:
+        data: blue
+    spec:
+      containers:
+      - name: my-container
+        image: nginx
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: data
+                operator: In
+                values:
+                - blue
